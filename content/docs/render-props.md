@@ -329,3 +329,48 @@ class MouseTracker extends React.Component {
 ```
 
 In cases where you cannot bind the instance method ahead of time in the constructor (e.g. because you need to close over the component's props and/or state) you should extend `React.Component` instead.
+
+## Optimizing Render Props
+
+If you've benchmarked your app and discovered that a render prop declaration is a performance bottleneck, here are some techniques to optimize:
+
+- Memoize the render function using a utility like [Recompose](https://github.com/acdlite/recompose) or [Lodash.Memoize](https://lodash.com/docs/4.17.4#memoize)
+- Move inline functions to be declared outside the render method:
+
+**Before: Inline Render Prop**
+
+```js
+class ABC extends React.Component {
+  render() {
+    <MyComponent render={() => <h1>Hello World</h1>} />
+  }
+}
+```
+
+**After: Declared Outside Class**
+
+```js
+class ABC extends React.Component {
+  render() {
+    return <MyComponent render={helloWorld} />
+  }
+}
+
+function helloWorld() {
+  return <h1>Hello World</h1>
+}
+```
+
+**After: Prototype Method**
+
+```js
+class ABC extends React.Component {
+  helloWorld() {
+    return <h1>Hello World</h1>
+  }
+
+  render() {
+    return <MyComponent render={this.helloWorld} />
+  }
+}
+```
