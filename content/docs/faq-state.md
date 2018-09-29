@@ -22,7 +22,7 @@ Here are some good resources for further reading on when to use `props` vs `stat
 
 In React, both `this.props` and `this.state` represent the *rendered* values, i.e. what's currently on the screen.
 
-Calls to `setState` are asynchronous - don't rely on `this.state` to reflect the new value immediately after calling `setState`. Pass an updater function instead of an object if you need compute values based on the current state (see below for details).
+Calls to `setState` are asynchronous - don't rely on `this.state` to reflect the new value immediately after calling `setState`. Pass an updater function instead of an object if you need to compute values based on the current state (see below for details).
 
 Example of code that will *not* behave as expected:
 
@@ -59,9 +59,9 @@ Passing an update function allows you to access the current state value inside t
 
 ```jsx
 incrementCount() {
-  this.setState((prevState) => {
-    // Important: read `prevState` instead of `this.state` when updating.
-    return {count: prevState.count + 1}
+  this.setState((state) => {
+    // Important: read `state` instead of `this.state` when updating.
+    return {count: state.count + 1}
   });
 }
 
@@ -101,6 +101,6 @@ This [GitHub comment](https://github.com/facebook/react/issues/11527#issuecommen
 
 ### Should I use a state management library like Redux or MobX?
 
-[Maybe.](http://redux.js.org/docs/faq/General.html#general-when-to-use)
+[Maybe.](https://redux.js.org/faq/general#when-should-i-use-redux)
 
 It's a good idea to get to know React first, before adding in additional libraries. You can build quite complex applications using only React.
